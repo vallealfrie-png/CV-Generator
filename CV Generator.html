@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV System | Alfrie Valle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@700&family=Roboto+Mono&display=swap');
+
+        /* Print Settings */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .cv-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
+        }
+
+        /* Editable Highlight */
+        [contenteditable]:hover { background: rgba(0,0,0,0.03); outline: 1px dashed #666; }
+        
+        /* Theme 1: Tech/Modern (Emerald/Dark) */
+        .theme-tech { --primary: #059669; --text-main: #1e293b; --font-header: 'Inter', sans-serif; }
+        .theme-tech .sidebar { background: #f8fafc; border-right: 4px solid var(--primary); }
+
+        /* Theme 2: Corporate/Classic (Navy/Gold) */
+        .theme-corp { --primary: #1e3a8a; --text-main: #111827; --font-header: 'Playfair Display', serif; }
+        .theme-corp .cv-page { border-top: 12px solid var(--primary); }
+        .theme-corp h1 { font-family: var(--font-header); letter-spacing: 0; }
+
+        /* Theme 3: Minimalist/Monochrome */
+        .theme-minimal { --primary: #000000; --text-main: #333333; --font-header: 'Roboto Mono', monospace; }
+        .theme-minimal .cv-page { padding: 40px !important; }
+    </style>
+</head>
+<body class="bg-slate-200 py-10 transition-all duration-500 theme-tech" id="body-theme">
+
+    <div class="max-w-4xl mx-auto mb-6 no-print bg-white p-5 rounded-2xl shadow-xl flex flex-wrap justify-between items-center gap-4">
+        <div class="flex gap-2">
+            <button onclick="setTheme('theme-tech')" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-full">Modern Tech</button>
+            <button onclick="setTheme('theme-corp')" class="px-4 py-2 bg-blue-900 text-white text-xs font-bold rounded-full">Corporate</button>
+            <button onclick="setTheme('theme-minimal')" class="px-4 py-2 bg-black text-white text-xs font-bold rounded-full">Minimalist</button>
+        </div>
+        <button onclick="window.print()" class="bg-slate-800 text-white px-8 py-2 rounded-full font-bold hover:bg-black transition">Print PDF</button>
+    </div>
+
+    <div class="cv-page max-w-4xl mx-auto bg-white shadow-2xl min-h-[1100px] text-slate-800 overflow-hidden">
+        
+        <div class="flex flex-col md:flex-row min-h-[1100px]">
+            
+            <div class="sidebar w-full md:w-1/3 p-8 flex flex-col gap-8 transition-colors">
+                <div class="text-center md:text-left">
+                    <h1 contenteditable="true" class="text-3xl font-black uppercase leading-tight mb-2 tracking-tighter">Alfrie Valle</h1>
+                    <p contenteditable="true" class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 mb-6">Data Analyst & Dev</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Contact</h3>
+                    <div contenteditable="true" class="text-xs space-y-2 text-slate-600">
+                        <p>📍 Dasmariñas, Cavite</p>
+                        <p>📞 09073574769</p>
+                        <p>✉️ vallealfrie@gmail.com</p>
+                        <p>🌐 github.com/vallealfrie</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Toolkit</h3>
+                    <div contenteditable="true" class="flex flex-wrap gap-2">
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">SQL</span>
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">JavaScript</span>
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">GitHub</span>
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Supabase</span>
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Tailwind</span>
+                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">AI Coding</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Education</h3>
+                    <div contenteditable="true" class="text-xs">
+                        <p class="font-bold">Universidad de Manila</p>
+                        <p class="text-slate-500 italic">BSBA Marketing</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-2/3 p-10 bg-white">
+                
+                <section class="mb-10">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-4">Summary</h3>
+                    <p contenteditable="true" class="text-sm leading-relaxed text-slate-600 italic">
+                        Highly analytical professional with 10+ years in financial operations, now specializing in AI-integrated data systems. Expert in bridging the gap between database management and high-end web interfaces.
+                    </p>
+                </section>
+
+                <section class="mb-10">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Experience</h3>
+                    
+                    <div class="mb-8">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 contenteditable="true" class="font-bold text-lg">Perpetual Help Medical Center</h4>
+                            <span contenteditable="true" class="text-[10px] font-bold bg-slate-100 px-2 py-1">2022 - PRESENT</span>
+                        </div>
+                        <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Data Analyst & Web Developer</p>
+                        <ul contenteditable="true" class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                            <li>Developed real-time **Patient Dashboards** using Supabase, increasing data visibility for hospital staff.</li>
+                            <li>Engineered **automated reporting systems** that bypassed API row limits via recursive JS fetching.</li>
+                            <li>Integrated **AI-assisted development** workflows to reduce project deployment time by 40%.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 contenteditable="true" class="font-bold text-lg">Profriends / Veterans Bank</h4>
+                            <span contenteditable="true" class="text-[10px] font-bold bg-slate-100 px-2 py-1">2011 - 2020</span>
+                        </div>
+                        <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Finance & Loan Specialist</p>
+                        <ul contenteditable="true" class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                            <li>Managed full-cycle loan processing and accounting reconciliation with 100% data accuracy.</li>
+                            <li>Optimized internal data entry protocols in the Loan Organization System.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Technical Projects</h3>
+                    <div contenteditable="true" class="border-l-2 border-slate-100 pl-4 space-y-4">
+                        <div>
+                            <p class="text-sm font-bold">Staff Portal - Secure Access Layer</p>
+                            <p class="text-xs text-slate-500">Built a Glassmorphism-style login system with GitHub version control and Supabase Auth.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setTheme(themeName) {
+            document.getElementById('body-theme').className = 'bg-slate-200 py-10 transition-all duration-500 ' + themeName;
+        }
+    </script>
+</body>
+</html>
