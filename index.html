@@ -5,46 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV System | Alfrie S. Valle</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Library for PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@700&family=Roboto+Mono&display=swap');
 
-        /* Print Settings */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; padding: 0 !important; }
             .cv-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
         }
 
-        /* Editable Highlight */
         [contenteditable]:hover { background: rgba(0,0,0,0.03); outline: 1px dashed #666; }
         
-        /* Theme 1: Tech/Modern (Emerald/Dark) */
         .theme-tech { --primary: #059669; --text-main: #1e293b; --font-header: 'Inter', sans-serif; }
         .theme-tech .sidebar { background: #f8fafc; border-right: 4px solid var(--primary); }
 
-        /* Theme 2: Corporate/Classic (Navy/Gold) */
         .theme-corp { --primary: #1e3a8a; --text-main: #111827; --font-header: 'Playfair Display', serif; }
         .theme-corp .cv-page { border-top: 12px solid var(--primary); }
         .theme-corp h1 { font-family: var(--font-header); letter-spacing: 0; }
 
-        /* Theme 3: Minimalist/Monochrome */
         .theme-minimal { --primary: #000000; --text-main: #333333; --font-header: 'Roboto Mono', monospace; }
         .theme-minimal .cv-page { padding: 40px !important; }
     </style>
 </head>
 <body class="bg-slate-200 py-10 transition-all duration-500 theme-tech" id="body-theme">
 
+    <!-- Control Panel -->
     <div class="max-w-4xl mx-auto mb-6 no-print bg-white p-5 rounded-2xl shadow-xl flex flex-wrap justify-between items-center gap-4">
         <div class="flex gap-2">
-            <button onclick="setTheme('theme-tech')" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-full">Modern Tech</button>
-            <button onclick="setTheme('theme-corp')" class="px-4 py-2 bg-blue-900 text-white text-xs font-bold rounded-full">Corporate</button>
-            <button onclick="setTheme('theme-minimal')" class="px-4 py-2 bg-black text-white text-xs font-bold rounded-full">Minimalist</button>
+            <button onclick="setTheme('theme-tech')" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-full transition hover:scale-105">Modern Tech</button>
+            <button onclick="setTheme('theme-corp')" class="px-4 py-2 bg-blue-900 text-white text-xs font-bold rounded-full transition hover:scale-105">Corporate</button>
+            <button onclick="setTheme('theme-minimal')" class="px-4 py-2 bg-black text-white text-xs font-bold rounded-full transition hover:scale-105">Minimalist</button>
         </div>
-        <button onclick="window.print()" class="bg-slate-800 text-white px-8 py-2 rounded-full font-bold hover:bg-black transition">Print PDF</button>
+        <div class="flex gap-3">
+            <button onclick="downloadPDF()" class="bg-emerald-100 text-emerald-700 px-6 py-2 rounded-full font-bold hover:bg-emerald-200 transition flex items-center gap-2">
+                <span>⬇️</span> Download PDF
+            </button>
+            <button onclick="window.print()" class="bg-slate-800 text-white px-8 py-2 rounded-full font-bold hover:bg-black transition">Print View</button>
+        </div>
     </div>
 
-    <div class="cv-page max-w-4xl mx-auto bg-white shadow-2xl min-h-[1100px] text-slate-800 overflow-hidden">
-        
+    <div id="cv-content" class="cv-page max-w-4xl mx-auto bg-white shadow-2xl min-h-[1100px] text-slate-800 overflow-hidden">
         <div class="flex flex-col md:flex-row min-h-[1100px]">
             
             <!-- SIDEBAR -->
@@ -60,7 +62,6 @@
                         <p>📍 Dasmariñas, Cavite</p>
                         <p>📞 09073574769</p>
                         <p>✉️ vallealfrie@gmail.com</p>
-                        <p>🌐 github.com/vallealfrie</p>
                     </div>
                 </div>
 
@@ -68,26 +69,9 @@
                     <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Toolkit</h3>
                     <div contenteditable="true" class="flex flex-wrap gap-2">
                         <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Google Apps Script</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">JavaScript (ES6+)</span>
                         <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Tailwind CSS</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Supabase</span>
                         <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">GPM Engines</span>
                         <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">AI Vibe Coding</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">SQL</span>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Education</h3>
-                    <div contenteditable="true" class="text-xs space-y-3">
-                        <div>
-                            <p class="font-bold">Universidad de Manila</p>
-                            <p class="text-slate-500 italic">BSBA Marketing (2007-2011)</p>
-                        </div>
-                        <div>
-                            <p class="font-bold">S.T.I.</p>
-                            <p class="text-slate-500 italic">Dip. Computer Electronic Tech (2001-2003)</p>
-                        </div>
                     </div>
                 </div>
 
@@ -95,25 +79,22 @@
                     <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Training</h3>
                     <div contenteditable="true" class="text-[10px] space-y-2 text-slate-600">
                         <p>• Leadership Developmental Training</p>
-                        <p>• DigiTech: Mastering Tech (2022)</p>
-                        <p>• Signature Verification (Veterans Bank)</p>
+                        <p>• DigiTech: Mastering Tech</p>
                     </div>
                 </div>
             </div>
 
             <!-- MAIN CONTENT -->
             <div class="w-full md:w-2/3 p-10 bg-white">
-                
                 <section class="mb-10">
                     <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-4">Summary</h3>
                     <p contenteditable="true" class="text-sm leading-relaxed text-slate-600 italic">
-                        Highly analytical professional with 10+ years in financial operations, now specializing in AI-integrated data systems. Expert in "vibe coding" workflows to rapidly deploy secure, scalable hospital management tools and automated business logic.
+                        Innovative professional with over a decade of experience in finance and medical data systems. Specialized in **"vibe coding"** workflows and **Google Apps Script automation**, including auto-email confirmation systems.
                     </p>
                 </section>
 
                 <section class="mb-10">
                     <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Experience</h3>
-                    
                     <div class="mb-8">
                         <div class="flex justify-between items-start mb-1">
                             <h4 contenteditable="true" class="font-bold text-lg">Perpetual Help Medical Center</h4>
@@ -121,32 +102,9 @@
                         </div>
                         <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Data Analyst & Full-Stack Developer</p>
                         <ul contenteditable="true" class="text-sm text-slate-600 space-y-2 list-disc ml-4">
-                            <li>Architected the **Integrative Medicine Loyalty Program** with a dual-interface QR ecosystem for staff and patients.</li>
-                            <li>Engineered a **GPM Intelligence Engine** that automates reward suggestions based on a 40% profit margin threshold.</li>
-                            <li>Developed a **Google Apps Script** automation for attendee confirmation emails via Google Form triggers.</li>
-                            <li>Bypassed API row limits using **recursive JS fetching**, ensuring 100% synchronization for medical master data.</li>
-                        </ul>
-                    </div>
-
-                    <div class="mb-8">
-                        <div class="flex justify-between items-start mb-1">
-                            <h4 contenteditable="true" class="font-bold text-lg">Veterans Bank</h4>
-                            <span contenteditable="true" class="text-[10px] font-bold bg-slate-100 px-2 py-1">PREVIOUS</span>
-                        </div>
-                        <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Accounting Staff</p>
-                        <ul contenteditable="true" class="text-sm text-slate-600 space-y-1 list-disc ml-4">
-                            <li>Managed accounting reconciliation and monitored outward/inward checks with 100% accuracy.</li>
-                        </ul>
-                    </div>
-
-                    <div class="mb-8">
-                        <div class="flex justify-between items-start mb-1">
-                            <h4 contenteditable="true" class="font-bold text-lg">Profriends</h4>
-                            <span contenteditable="true" class="text-[10px] font-bold bg-slate-100 px-2 py-1">2011 - 2020</span>
-                        </div>
-                        <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Loans Processor</p>
-                        <ul contenteditable="true" class="text-sm text-slate-600 space-y-1 list-disc ml-4">
-                            <li>Processed hundreds of loan applications annually while maintaining strict data privacy and efficiency.</li>
+                            <li>Developed a dual-interface QR scanning loyalty ecosystem.</li>
+                            <li>Engineered a **GPM Intelligence Engine** protecting 40% profit margins.</li>
+                            <li>Built automated email confirmation systems using **Google Apps Script**.</li>
                         </ul>
                     </div>
                 </section>
@@ -155,30 +113,21 @@
                     <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Summits & Seminars</h3>
                     <div contenteditable="true" class="text-sm text-slate-600 space-y-3">
                         <div class="flex gap-4">
-                            <span class="font-bold text-[10px] w-24">APR 26, 2026</span>
+                            <span class="font-bold text-[10px] w-24 uppercase">APR 26, 2026</span>
                             <p>Digitalization in Healthcare and Hospital Summit</p>
                         </div>
                         <div class="flex gap-4">
-                            <span class="font-bold text-[10px] w-24">OCT 1, 2025</span>
+                            <span class="font-bold text-[10px] w-24 uppercase">OCT 1, 2025</span>
                             <p>AI Navigation in Economics Seminar</p>
                         </div>
                     </div>
                 </section>
 
                 <section>
-                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Technical Projects</h3>
-                    <div contenteditable="true" class="border-l-2 border-slate-100 pl-4 space-y-4">
-                        <div>
-                            <p class="text-sm font-bold">AI Workforce & Reskilling Planner</p>
-                            <p class="text-xs text-slate-500">Visualization tool for the Philippine workforce, analyzing job displacement and creation trends.</p>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold">Staff Portal - PHMC</p>
-                            <p class="text-xs text-slate-500">Built a Glassmorphism-style dashboard with secure access and automated revenue tracking.</p>
-                        </div>
-                    </div>
+                    <p contenteditable="true" class="text-[9px] text-slate-400 mt-10">
+                        *Portfolio available for personal viewing during interviews due to proprietary healthcare data privacy.
+                    </p>
                 </section>
-
             </div>
         </div>
     </div>
@@ -186,6 +135,28 @@
     <script>
         function setTheme(themeName) {
             document.getElementById('body-theme').className = 'bg-slate-200 py-10 transition-all duration-500 ' + themeName;
+        }
+
+        async function downloadPDF() {
+            const element = document.getElementById('cv-content');
+            const opt = {
+                margin: 0,
+                filename: 'Alfrie_Valle_CV.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Temporarily disable editing to prevent dashed lines in PDF
+            const editableElements = document.querySelectorAll('[contenteditable]');
+            editableElements.forEach(el => el.setAttribute('contenteditable', 'false'));
+
+            try {
+                await html2pdf().set(opt).from(element).save();
+            } finally {
+                // Restore editing after download
+                editableElements.forEach(el => el.setAttribute('contenteditable', 'true'));
+            }
         }
     </script>
 </body>
