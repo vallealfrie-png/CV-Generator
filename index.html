@@ -3,158 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV System | Alfrie S. Valle</title>
+    <title>Complete CV | Alfrie S. Valle</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Library for PDF Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@700&family=Roboto+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap');
+
+        :root { --primary: #059669; --sidebar-bg: #111827; }
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
         @media print {
             .no-print { display: none !important; }
-            body { background: white !important; padding: 0 !important; }
             .cv-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
         }
 
-        [contenteditable]:hover { background: rgba(0,0,0,0.03); outline: 1px dashed #666; }
-        
-        .theme-tech { --primary: #059669; --text-main: #1e293b; --font-header: 'Inter', sans-serif; }
-        .theme-tech .sidebar { background: #f8fafc; border-right: 4px solid var(--primary); }
-
-        .theme-corp { --primary: #1e3a8a; --text-main: #111827; --font-header: 'Playfair Display', serif; }
-        .theme-corp .cv-page { border-top: 12px solid var(--primary); }
-        .theme-corp h1 { font-family: var(--font-header); letter-spacing: 0; }
-
-        .theme-minimal { --primary: #000000; --text-main: #333333; --font-header: 'Roboto Mono', monospace; }
-        .theme-minimal .cv-page { padding: 40px !important; }
+        [contenteditable]:hover { background: rgba(5, 150, 105, 0.05); outline: 1px dashed var(--primary); }
     </style>
 </head>
-<body class="bg-slate-200 py-10 transition-all duration-500 theme-tech" id="body-theme">
+<body class="bg-slate-100 py-10">
 
-    <!-- Control Panel -->
-    <div class="max-w-4xl mx-auto mb-6 no-print bg-white p-5 rounded-2xl shadow-xl flex flex-wrap justify-between items-center gap-4">
-        <div class="flex gap-2">
-            <button onclick="setTheme('theme-tech')" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-full transition hover:scale-105">Modern Tech</button>
-            <button onclick="setTheme('theme-corp')" class="px-4 py-2 bg-blue-900 text-white text-xs font-bold rounded-full transition hover:scale-105">Corporate</button>
-            <button onclick="setTheme('theme-minimal')" class="px-4 py-2 bg-black text-white text-xs font-bold rounded-full transition hover:scale-105">Minimalist</button>
-        </div>
-        <div class="flex gap-3">
-            <button onclick="downloadPDF()" class="bg-emerald-100 text-emerald-700 px-6 py-2 rounded-full font-bold hover:bg-emerald-200 transition flex items-center gap-2">
-                <span>⬇️</span> Download PDF
+    <!-- Controls -->
+    <div class="max-w-5xl mx-auto mb-6 no-print bg-white p-4 rounded-xl shadow-md flex justify-between items-center">
+        <h2 class="font-bold text-slate-700">Interactive CV Builder</h2>
+        <div class="flex gap-4">
+            <button onclick="downloadPDF()" class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-emerald-700 transition flex items-center gap-2">
+                Download Full CV (PDF)
             </button>
-            <button onclick="window.print()" class="bg-slate-800 text-white px-8 py-2 rounded-full font-bold hover:bg-black transition">Print View</button>
         </div>
     </div>
 
-    <div id="cv-content" class="cv-page max-w-4xl mx-auto bg-white shadow-2xl min-h-[1100px] text-slate-800 overflow-hidden">
-        <div class="flex flex-col md:flex-row min-h-[1100px]">
-            
-            <!-- SIDEBAR -->
-            <div class="sidebar w-full md:w-1/3 p-8 flex flex-col gap-8 transition-colors">
-                <div class="text-center md:text-left">
-                    <h1 contenteditable="true" class="text-3xl font-black uppercase leading-tight mb-2 tracking-tighter">Alfrie S. Valle</h1>
-                    <p contenteditable="true" class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 mb-6">Data Analyst & Full-Stack Developer</p>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Contact</h3>
-                    <div contenteditable="true" class="text-xs space-y-2 text-slate-600">
-                        <p>📍 Dasmariñas, Cavite</p>
-                        <p>📞 09073574769</p>
-                        <p>✉️ vallealfrie@gmail.com</p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Toolkit</h3>
-                    <div contenteditable="true" class="flex flex-wrap gap-2">
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Google Apps Script</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">Tailwind CSS</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">GPM Engines</span>
-                        <span class="bg-slate-100 px-2 py-1 rounded text-[9px] font-bold">AI Vibe Coding</span>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black uppercase tracking-widest border-b border-slate-200 pb-1">Training</h3>
-                    <div contenteditable="true" class="text-[10px] space-y-2 text-slate-600">
-                        <p>• Leadership Developmental Training</p>
-                        <p>• DigiTech: Mastering Tech</p>
-                    </div>
-                </div>
+    <div id="cv-content" class="max-w-5xl mx-auto bg-white shadow-2xl min-h-[297mm] flex flex-col md:flex-row">
+        
+        <!-- LEFT COLUMN: AUTHENTICATION & SKILLS -->
+        <div class="w-full md:w-1/3 bg-slate-900 text-white p-10 flex flex-col gap-10">
+            <div class="text-center">
+                <div class="w-32 h-32 bg-emerald-500 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl font-black italic">AV</div>
+                <h1 contenteditable="true" class="text-2xl font-extrabold tracking-tight uppercase">Alfrie S. Valle</h1>
+                <p contenteditable="true" class="text-emerald-400 font-mono text-xs mt-2 uppercase tracking-widest">Full-Stack Dev & Data Analyst</p>
             </div>
 
-            <!-- MAIN CONTENT -->
-            <div class="w-full md:w-2/3 p-10 bg-white">
-                <section class="mb-10">
-                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-4">Summary</h3>
-                    <p contenteditable="true" class="text-sm leading-relaxed text-slate-600 italic">
-                        Innovative professional with over a decade of experience in finance and medical data systems. Specialized in **"vibe coding"** workflows and **Google Apps Script automation**, including auto-email confirmation systems.
-                    </p>
-                </section>
-
-                <section class="mb-10">
-                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Experience</h3>
-                    <div class="mb-8">
-                        <div class="flex justify-between items-start mb-1">
-                            <h4 contenteditable="true" class="font-bold text-lg">Perpetual Help Medical Center</h4>
-                            <span contenteditable="true" class="text-[10px] font-bold bg-slate-100 px-2 py-1">2022 - PRESENT</span>
-                        </div>
-                        <p contenteditable="true" class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Data Analyst & Full-Stack Developer</p>
-                        <ul contenteditable="true" class="text-sm text-slate-600 space-y-2 list-disc ml-4">
-                            <li>Developed a dual-interface QR scanning loyalty ecosystem.</li>
-                            <li>Engineered a **GPM Intelligence Engine** protecting 40% profit margins.</li>
-                            <li>Built automated email confirmation systems using **Google Apps Script**.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="mb-10">
-                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6">Summits & Seminars</h3>
-                    <div contenteditable="true" class="text-sm text-slate-600 space-y-3">
-                        <div class="flex gap-4">
-                            <span class="font-bold text-[10px] w-24 uppercase">APR 26, 2026</span>
-                            <p>Digitalization in Healthcare and Hospital Summit</p>
-                        </div>
-                        <div class="flex gap-4">
-                            <span class="font-bold text-[10px] w-24 uppercase">OCT 1, 2025</span>
-                            <p>AI Navigation in Economics Seminar</p>
-                        </div>
+            <div class="space-y-6">
+                <section>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Contact</h3>
+                    <div contenteditable="true" class="text-sm space-y-3 font-light">
+                        <p>📍 Dasmariñas, Cavite, PH</p>
+                        <p>📞 0907-357-4769</p>
+                        <p>✉️ vallealfrie@gmail.com</p>
+                        <p>🔗 github.com/vallealfrie</p>
                     </div>
                 </section>
 
                 <section>
-                    <p contenteditable="true" class="text-[9px] text-slate-400 mt-10">
-                        *Portfolio available for personal viewing during interviews due to proprietary healthcare data privacy.
-                    </p>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Tech Stack</h3>
+                    <div contenteditable="true" class="flex flex-wrap gap-2">
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">React / Next.js</span>
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">Tailwind CSS</span>
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">Supabase (BaaS)</span>
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">Google Apps Script</span>
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">Python / SQL</span>
+                        <span class="border border-slate-700 px-2 py-1 rounded text-[10px] font-mono">Vibe Coding</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Core Strengths</h3>
+                    <ul contenteditable="true" class="text-sm space-y-2 font-light">
+                        <li>• Automated Business Logic</li>
+                        <li>• UI/UX Glassmorphism Design</li>
+                        <li>• Data Visualization</li>
+                        <li>• Financial Reconciliation</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Education</h3>
+                    <div contenteditable="true" class="space-y-4">
+                        <div>
+                            <p class="text-sm font-bold">BSBA Marketing</p>
+                            <p class="text-xs text-slate-400">Universidad de Manila (2011)</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold">Computer Electronics</p>
+                            <p class="text-xs text-slate-400">S.T.I. College (2003)</p>
+                        </div>
+                    </div>
                 </section>
             </div>
+        </div>
+
+        <!-- RIGHT COLUMN: EXPERIENCE & PROJECTS -->
+        <div class="w-full md:w-2/3 p-12 bg-white text-slate-800">
+            
+            <section class="mb-12">
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-4">Executive Summary</h2>
+                <p contenteditable="true" class="text-base text-slate-600 leading-relaxed italic">
+                    Multidisciplinary developer with a foundation in Marketing and Finance, bridging the gap between raw data and actionable business intelligence. Proven track record in developing secure healthcare portals and leveraging AI-native "vibe coding" to accelerate software deployment.
+                </p>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-6">Professional Experience</h2>
+                
+                <div class="mb-10 relative pl-6 border-l-2 border-emerald-100">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 bg-emerald-600 rounded-full"></div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 contenteditable="true" class="text-xl font-bold">Perpetual Help Medical Center</h3>
+                        <span contenteditable="true" class="text-xs font-bold text-slate-400">2022 — PRESENT</span>
+                    </div>
+                    <p contenteditable="true" class="text-sm font-bold text-emerald-700 uppercase mb-3">Data Analyst & Full-Stack Developer</p>
+                    <ul contenteditable="true" class="text-sm text-slate-600 space-y-3">
+                        <li>• **GPM Engine:** Architected a proprietary profitability engine that calculates reward tiers based on a strictly enforced 40% margin, protecting hospital revenue.</li>
+                        <li>• **Staff Loyalty Ecosystem:** Designed and deployed a React-based dashboard utilizing Supabase for real-time tracking of staff interactions and hospital-wide KPIs.</li>
+                        <li>• **Automation:** Developed custom Google Apps Script micro-services to handle thousands of automated email confirmations for medical seminars.</li>
+                    </ul>
+                </div>
+
+                <div class="mb-10 relative pl-6 border-l-2 border-slate-100">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 bg-slate-300 rounded-full"></div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 contenteditable="true" class="text-xl font-bold">Philippine Veterans Bank</h3>
+                        <span contenteditable="true" class="text-xs font-bold text-slate-400">PAST TENURE</span>
+                    </div>
+                    <p contenteditable="true" class="text-sm font-bold text-slate-400 uppercase mb-3">Accounting Operations</p>
+                    <ul contenteditable="true" class="text-sm text-slate-600 space-y-2">
+                        <li>• Managed high-volume financial reconciliation and signature verification for commercial transactions.</li>
+                        <li>• Ensured regulatory compliance and strict data security protocols for sensitive banking information.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-6">Key Technical Projects</h2>
+                <div contenteditable="true" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-sm mb-2">AI Workforce Planner</h4>
+                        <p class="text-xs text-slate-500">A data-visualization tool built in Jan 2026 to map job displacement and creation trends in the Philippines.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-sm mb-2">HMO Masterfile Hub</h4>
+                        <p class="text-xs text-slate-500">Centralized directory system for hospital clinical staff, optimizing HMO processing times.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-6">Recent Certifications</h2>
+                <div contenteditable="true" class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="text-xs font-bold text-slate-400 w-24">APR 2026</div>
+                        <p class="text-sm">Healthcare Digitalization Summit (Attendee & Presenter)</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-xs font-bold text-slate-400 w-24">OCT 2025</div>
+                        <p class="text-sm">AI Navigation in Modern Economics (Certificate of Mastery)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-16 pt-8 border-t border-slate-100">
+                <p contenteditable="true" class="text-[10px] text-slate-400 italic">
+                    Note: My full development portfolio containing sensitive PHMC data is available for secure viewing during the interview phase to respect institutional data privacy policies.
+                </p>
+            </section>
+
         </div>
     </div>
 
     <script>
-        function setTheme(themeName) {
-            document.getElementById('body-theme').className = 'bg-slate-200 py-10 transition-all duration-500 ' + themeName;
-        }
-
         async function downloadPDF() {
             const element = document.getElementById('cv-content');
             const opt = {
                 margin: 0,
-                filename: 'Alfrie_Valle_CV.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                filename: 'Alfrie_Valle_Full_CV.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
 
-            // Temporarily disable editing to prevent dashed lines in PDF
             const editableElements = document.querySelectorAll('[contenteditable]');
             editableElements.forEach(el => el.setAttribute('contenteditable', 'false'));
 
             try {
                 await html2pdf().set(opt).from(element).save();
             } finally {
-                // Restore editing after download
                 editableElements.forEach(el => el.setAttribute('contenteditable', 'true'));
             }
         }
